@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model generalparameter {
+  idgeneralparameter    Bytes                   @id @unique(map: "idgeneralparameter_UNIQUE") @default(dbgenerated("(uuid_to_bin(uuid()))")) @db.Binary(16)
+  idou                  Bytes?                  @map("_idou") @db.Binary(16)
+  name                  String                  @db.VarChar(45)
+  shortname             String                  @db.VarChar(10)
+  idusercreate          Bytes?                  @map("_idusercreate") @db.Binary(16)
+  createdate            DateTime?               @db.DateTime(0)
+  iduserupdate          Bytes?                  @map("_iduserupdate") @db.Binary(16)
+  updatedate            DateTime?               @db.DateTime(0)
+  generalparametervalue generalparametervalue[]
+}
+
+model generalparametervalue {
+  idgeneralparametervalue Bytes            @unique(map: "idgeneralparametervalue_UNIQUE") @default(dbgenerated("(uuid_to_bin(uuid()))")) @db.Binary(16)
+  idou                    Bytes?           @map("_idou") @db.Binary(16)
+  idgeneralparameter      Bytes            @map("_idgeneralparameter") @db.Binary(16)
+  name                    String           @db.VarChar(45)
+  shortname               String           @db.VarChar(10)
+  value                   String?          @db.VarChar(45)
+  type                    String?          @db.VarChar(45)
+  idusercreate            Bytes?           @map("_idusercreate") @db.Binary(16)
+  createdate              DateTime?        @db.DateTime(0)
+  iduserupdate            Bytes?           @map("_iduserupdate") @db.Binary(16)
+  updatedate              DateTime?        @db.DateTime(0)
+  generalparameter        generalparameter @relation(fields: [idgeneralparameter], references: [idgeneralparameter], onDelete: NoAction, onUpdate: NoAction, map: "fk_generalparametervalue_generalparameter1")
+
+  @@id([idgeneralparametervalue, idgeneralparameter])
+  @@index([idgeneralparameter], map: "fk_generalparametervalue_generalparameter1_idx")
+}

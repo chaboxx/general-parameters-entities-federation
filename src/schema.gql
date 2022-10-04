@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type GeneralParameterValue {
+  idgeneralparametervalue: String!
+  idou: String!
+  idgeneralparameter: GeneralParameter
+  name: String!
+  shortname: String!
+  value: String
+  type: String
+  idusercreate: String
+  createdate: Timestamp
+  iduserupdate: String
+  updatedate: Timestamp
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type GeneralParameter {
+  idgeneralparameter: String!
+  idou: String
+  name: String!
+  shortname: String!
+  idusercreate: String
+  createdate: Timestamp
+  iduserupdate: String
+  updatedate: Timestamp
+  generalparametervalue: [GeneralParameterValue!]
+}
+
+type Query {
+  generalParameter: [GeneralParameter!]!
+}
