@@ -1,9 +1,10 @@
 import { ObjectType, Field, Int } from "@nestjs/graphql";
+import { CustomUuidScalar } from "../scalars/buffer-scalar";
 import { GeneralParameter } from "./general-parameter.entity";
 @ObjectType()
 export class GeneralParameterValue {
-   @Field()
-   idgeneralparametervalue: string;
+   @Field(() => CustomUuidScalar)
+   idgeneralparametervalue: Buffer;
 
    @Field()
    idou: string;
@@ -34,6 +35,4 @@ export class GeneralParameterValue {
 
    @Field({ nullable: true })
    updatedate?: Date;
-
-   
 }

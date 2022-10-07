@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type GeneralParameterValue {
-  idgeneralparametervalue: String!
+  idgeneralparametervalue: BUFFER!
   idou: String!
   idgeneralparameter: GeneralParameter
   name: String!
@@ -16,13 +16,15 @@ type GeneralParameterValue {
   updatedate: Timestamp
 }
 
+scalar BUFFER
+
 """
 `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
 """
 scalar Timestamp
 
 type GeneralParameter {
-  idgeneralparameter: String!
+  idgeneralparameter: BUFFER!
   idou: String
   name: String!
   shortname: String!
@@ -34,5 +36,33 @@ type GeneralParameter {
 }
 
 type Query {
-  generalParameter: [GeneralParameter!]!
+  generalParameters: [GeneralParameter!]!
+  generalParameter(id: BUFFER!): GeneralParameter!
+}
+
+type Mutation {
+  createGeneralParameter(createGeneralParameterInput: CreateGeneralParameterInput!): GeneralParameter!
+  updateGeneralParameter(updateGeneralParameterInput: UpdateGeneralParameterInput!): GeneralParameter!
+  removeGeneralParameter(id: BUFFER!): GeneralParameter!
+}
+
+input CreateGeneralParameterInput {
+  name: String!
+  shortname: String!
+  generalparametervalue: [GeneralParameterValueInput!]!
+}
+
+input GeneralParameterValueInput {
+  idou: BUFFER
+  name: String!
+  shortname: String!
+  value: String
+  type: String
+}
+
+input UpdateGeneralParameterInput {
+  name: String!
+  shortname: String!
+  generalparametervalue: [GeneralParameterValueInput!]
+  idgeneralparameter: BUFFER!
 }

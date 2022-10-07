@@ -1,41 +1,63 @@
-import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
-import { PrismaService } from "src/prisma.service";
-import { GeneralParameter } from "./entities/general-parameter.entity";
+import {
+   Resolver,
+   Query,
+   Mutation,
+   Args,
+   ResolveField,
+   Root,
+} from "@nestjs/graphql";
+import { GeneralParameterService } from "./general-parameter.service";
+import { GeneralParameter } from "./schemas/general-parameter.entity";
 import { CreateGeneralParameterInput } from "./dto/create-general-parameter.input";
 import { UpdateGeneralParameterInput } from "./dto/update-general-parameter.input";
+import { CustomUuidScalar } from "./scalars/buffer-scalar";
+import { GeneralParameterValue } from "./schemas/general-parameter-value.entity";
 
 @Resolver(() => GeneralParameter)
 export class GeneralParameterResolver {
-   constructor(private readonly prismaService: PrismaService) {}
+   constructor(private readonly generalParameter: GeneralParameterService) {}
 
-   @Query(() => [GeneralParameter], { name: "generalParameter" })
-   async findAll() {
-      let x = await this.prismaService.generalparameter.findMany();
-      console.log(x);
-      let y = x.map((item) => ({
-         ...item,
-         idgeneralparameter: item.idgeneralparameter.toString("hex"),
-      }));
-      return y;
+   @ResolveField()
+   generalparametervalue(@Root() generalparameter: GeneralParameter) {
+      return this.generalParameter.resolveGeneralParameterValue(
+         generalparameter.idgeneralparameter
+      );
    }
 
-   //  @Mutation(() => GeneralParameter)
-   //  createGeneralParameter(@Args('createGeneralParameterInput') createGeneralParameterInput: CreateGeneralParameterInput) {
-   //    return this.generalParameterService.create(createGeneralParameterInput);
-   //  }
+   @Query(() => [GeneralParameter], { name: "generalParameters" })
+   getGeneralParameters() {
+      return this.generalParameter.getGeneralParameters();
+   }
 
-   // @Query(() => GeneralParameter, { name: 'generalParameter' })
-   // findOne(@Args('id', { type: () => Int }) id: number) {
-   //   return this.generalParameterService.findOne(id);
-   // }
+   @Query(() => GeneralParameter, { name: "generalParameter" })
+   findOne(@Args("id", { type: () => CustomUuidScalar }) id: Buffer) {
+      return this.generalParameter.getGeneralParameter(id);
+   }
 
-   // @Mutation(() => GeneralParameter)
-   // updateGeneralParameter(@Args('updateGeneralParameterInput') updateGeneralParameterInput: UpdateGeneralParameterInput) {
-   //   return this.generalParameterService.update(updateGeneralParameterInput.id, updateGeneralParameterInput);
-   // }
+   @Mutation(() => GeneralParameter)
+   createGeneralParameter(
+      @Args("createGeneralParameterInput")
+      createGeneralParameterInput: CreateGeneralParameterInput
+   ) {
+      return this.generalParameter.createGeneralParameter(
+         createGeneralParameterInput
+      );
+   }
 
-   // @Mutation(() => GeneralParameter)
-   // removeGeneralParameter(@Args('id', { type: () => Int }) id: number) {
-   //   return this.generalParameterService.remove(id);
-   // }
+   @Mutation(() => GeneralParameter)
+   updateGeneralParameter(
+      @Args("updateGeneralParameterInput")
+      updateGeneralParameterInput: UpdateGeneralParameterInput
+   ) {
+      return this.generalParameter.updateGeneralParameter(
+         updateGeneralParameterInput
+      );
+   }
+
+   @Mutation(() => GeneralParameter)
+   removeGeneralParameter(
+      @Args("id", { type: () => CustomUuidScalar }) id: Buffer
+   ) {
+      return this.generalParameter.removeGeneralParameter(id);
+   }
 }

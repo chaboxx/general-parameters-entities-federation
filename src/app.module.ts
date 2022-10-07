@@ -5,7 +5,6 @@ import { join } from "path";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { GeneralParameterModule } from "./general-parameter/general-parameter.module";
-
 import { CustomUuidScalar } from "./scalars";
 
 @Module({
@@ -16,7 +15,7 @@ import { CustomUuidScalar } from "./scalars";
          plugins: [ApolloServerPluginLandingPageLocalDefault()],
          autoSchemaFile: join(process.cwd(), "src/schema.gql"),
          buildSchemaOptions: { dateScalarMode: "timestamp" },
-         // resolvers: { uuid: CustomUuidScalar },
+         resolvers: { BUFFER: CustomUuidScalar },
       }),
       GeneralParameterModule,
    ],

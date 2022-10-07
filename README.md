@@ -1,10 +1,12 @@
-# General parameters
+# nestjs-prisma-graphql-template
 
 1. Install dependencies with `yarn`
 2. Run migrations:
-`yarn prisma migrate dev`
-3. Start server:
-`yarn dev`
+   `yarn prisma migrate dev`
+3. Generate prisma client
+   `yarn prisma generate`
+4. Start server:
+   `yarn dev`
 
 ## How to use
 cats has been left as an example of how the module should look.
