@@ -4,8 +4,6 @@ import { CreateGeneralParameterInput } from "./dto/create-general-parameter.inpu
 import { UpdateGeneralParameterInput } from "./dto/update-general-parameter.input";
 
 import { PrismaService } from "../prisma.service";
-import { isNotEmpty } from "class-validator";
-import { generalparameter } from "@prisma/client";
 
 @Injectable()
 export class GeneralParameterService {
@@ -39,18 +37,16 @@ export class GeneralParameterService {
          },
       });
 
-      const generalParameterValue =
-         await this.prisma.generalparametervalue.createMany({
-            data: data.generalparametervalue.map((item) => ({
-               ...item,
-               idgeneralparameter: generalParameter.idgeneralparameter,
-            })),
-         });
+      await this.prisma.generalparametervalue.createMany({
+         data: data.generalparametervalue.map((item) => ({
+            ...item,
+            idgeneralparameter: generalParameter.idgeneralparameter,
+         })),
+      });
 
-      const generalParameterObject =
-         await this.prisma.generalparameter.findUnique({
-            where: { idgeneralparameter: generalParameter.idgeneralparameter },
-         });
+      const generalParameterObject = await this.prisma.generalparameter.findUnique({
+         where: { idgeneralparameter: generalParameter.idgeneralparameter },
+      });
 
       return generalParameterObject;
    }
@@ -67,10 +63,9 @@ export class GeneralParameterService {
    }
 
    async removeGeneralParameter(idgeneralparameter: Buffer) {
-      const generalParameterValue =
-         await this.prisma.generalparametervalue.deleteMany({
-            where: { idgeneralparameter },
-         });
+      await this.prisma.generalparametervalue.deleteMany({
+         where: { idgeneralparameter },
+      });
 
       const generalParameter = await this.prisma.generalparameter.delete({
          where: { idgeneralparameter },

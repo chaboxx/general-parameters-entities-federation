@@ -1,4 +1,4 @@
-import { InputType, Int, Field } from "@nestjs/graphql";
+import { InputType, Field } from "@nestjs/graphql";
 import { IsString } from "class-validator";
 import { GeneralParameterValueInput } from "./create-general-parameter-value.input";
 

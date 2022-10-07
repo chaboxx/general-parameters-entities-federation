@@ -1,7 +1,5 @@
-import { InputType, Int, Field } from "@nestjs/graphql";
-import { IsString } from "class-validator";
+import { InputType, Field } from "@nestjs/graphql";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";
-import { GeneralParameter } from "../schemas/general-parameter.entity";
 
 @InputType()
 export class GeneralParameterValueInput {

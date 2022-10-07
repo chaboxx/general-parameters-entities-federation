@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from "@nestjs/graphql";
+import { ObjectType, Field } from "@nestjs/graphql";
 import { GeneralParameterValue } from "./general-parameter-value.entity";
 import { IsString } from "class-validator";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";

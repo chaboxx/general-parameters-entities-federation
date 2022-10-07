@@ -1,17 +1,9 @@
-import {
-   Resolver,
-   Query,
-   Mutation,
-   Args,
-   ResolveField,
-   Root,
-} from "@nestjs/graphql";
+import { Resolver, Query, Mutation, Args, ResolveField, Root } from "@nestjs/graphql";
 import { GeneralParameterService } from "./general-parameter.service";
 import { GeneralParameter } from "./schemas/general-parameter.entity";
 import { CreateGeneralParameterInput } from "./dto/create-general-parameter.input";
 import { UpdateGeneralParameterInput } from "./dto/update-general-parameter.input";
 import { CustomUuidScalar } from "./scalars/buffer-scalar";
-import { GeneralParameterValue } from "./schemas/general-parameter-value.entity";
 
 @Resolver(() => GeneralParameter)
 export class GeneralParameterResolver {
@@ -39,9 +31,7 @@ export class GeneralParameterResolver {
       @Args("createGeneralParameterInput")
       createGeneralParameterInput: CreateGeneralParameterInput
    ) {
-      return this.generalParameter.createGeneralParameter(
-         createGeneralParameterInput
-      );
+      return this.generalParameter.createGeneralParameter(createGeneralParameterInput);
    }
 
    @Mutation(() => GeneralParameter)
@@ -49,15 +39,11 @@ export class GeneralParameterResolver {
       @Args("updateGeneralParameterInput")
       updateGeneralParameterInput: UpdateGeneralParameterInput
    ) {
-      return this.generalParameter.updateGeneralParameter(
-         updateGeneralParameterInput
-      );
+      return this.generalParameter.updateGeneralParameter(updateGeneralParameterInput);
    }
 
    @Mutation(() => GeneralParameter)
-   removeGeneralParameter(
-      @Args("id", { type: () => CustomUuidScalar }) id: Buffer
-   ) {
+   removeGeneralParameter(@Args("id", { type: () => CustomUuidScalar }) id: Buffer) {
       return this.generalParameter.removeGeneralParameter(id);
    }
 }
