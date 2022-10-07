@@ -5,7 +5,7 @@ import { join } from "path";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { GeneralParameterModule } from "./general-parameter/general-parameter.module";
-import { CustomUuidScalar } from "./scalars";
+import { CustomUuidScalar } from "./general-parameter/scalars/buffer-scalar";
 
 @Module({
    imports: [
