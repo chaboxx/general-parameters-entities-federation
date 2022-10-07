@@ -6,7 +6,7 @@ export class GeneralParameterValue {
    @Field(() => CustomUuidScalar)
    idgeneralparametervalue: Buffer;
 
-   @Field()
+   @Field({ nullable: true })
    idou: string;
 
    @Field((type) => GeneralParameter, { nullable: true })

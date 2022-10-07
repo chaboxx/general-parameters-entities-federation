@@ -4,7 +4,7 @@
 
 type GeneralParameterValue {
   idgeneralparametervalue: BUFFER!
-  idou: String!
+  idou: String
   idgeneralparameter: GeneralParameter
   name: String!
   shortname: String!
