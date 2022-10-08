@@ -57,8 +57,34 @@ export class GeneralParameterService {
          data: {
             name: data.name,
             shortname: data.shortname,
+            generalparametervalue: {
+               updateMany: data.generalparametervalue
+                  .filter((item) => !!item.idgeneralparametervalue)
+                  .map((item) => ({
+                     where: {
+                        idgeneralparametervalue: item.idgeneralparametervalue,
+                     },
+                     data: item,
+                  })),
+               deleteMany: {
+                  idgeneralparametervalue: {
+                     notIn: data.generalparametervalue
+                        .filter((item) => !!item.idgeneralparametervalue)
+                        .map((item) => item.idgeneralparametervalue),
+                  },
+               },
+               createMany: {
+                  data: data.generalparametervalue
+                     .filter((item) => !item.idgeneralparametervalue)
+                     .map((item) => ({
+                        ...item,
+                        idgeneralparametervalue: undefined,
+                     })),
+               },
+            },
          },
       });
+
       return generalParameter;
    }
 

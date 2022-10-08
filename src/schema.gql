@@ -54,6 +54,7 @@ input CreateGeneralParameterInput {
 
 input GeneralParameterValueInput {
   idou: BUFFER
+  idgeneralparametervalue: BUFFER
   name: String!
   shortname: String!
   value: String
