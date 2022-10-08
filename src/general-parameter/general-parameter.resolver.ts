@@ -21,9 +21,9 @@ export class GeneralParameterResolver {
       return this.generalParameter.getGeneralParameters();
    }
 
-   @Query(() => GeneralParameter, { name: "generalParameter" })
+   @Query(() => GeneralParameter, { name: "getGeneralParameterById" })
    findOne(@Args("id", { type: () => CustomUuidScalar }) id: Buffer) {
-      return this.generalParameter.getGeneralParameter(id);
+      return this.generalParameter.getGeneralParameterById(id);
    }
 
    @Mutation(() => GeneralParameter)
@@ -43,7 +43,7 @@ export class GeneralParameterResolver {
    }
 
    @Mutation(() => GeneralParameter)
-   removeGeneralParameter(@Args("id", { type: () => CustomUuidScalar }) id: Buffer) {
-      return this.generalParameter.removeGeneralParameter(id);
+   deleteGeneralParameter(@Args("id", { type: () => CustomUuidScalar }) id: Buffer) {
+      return this.generalParameter.deleteGeneralParameter(id);
    }
 }

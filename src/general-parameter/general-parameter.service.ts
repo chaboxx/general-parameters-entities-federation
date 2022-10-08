@@ -21,7 +21,7 @@ export class GeneralParameterService {
       return await this.prisma.generalparameter.findMany();
    }
 
-   async getGeneralParameter(idgeneralparameter: Buffer) {
+   async getGeneralParameterById(idgeneralparameter: Buffer) {
       return await this.prisma.generalparameter.findUnique({
          where: {
             idgeneralparameter,
@@ -62,7 +62,7 @@ export class GeneralParameterService {
       return generalParameter;
    }
 
-   async removeGeneralParameter(idgeneralparameter: Buffer) {
+   async deleteGeneralParameter(idgeneralparameter: Buffer) {
       await this.prisma.generalparametervalue.deleteMany({
          where: { idgeneralparameter },
       });

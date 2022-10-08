@@ -37,13 +37,13 @@ type GeneralParameter {
 
 type Query {
   generalParameters: [GeneralParameter!]!
-  generalParameter(id: BUFFER!): GeneralParameter!
+  getGeneralParameterById(id: BUFFER!): GeneralParameter!
 }
 
 type Mutation {
   createGeneralParameter(createGeneralParameterInput: CreateGeneralParameterInput!): GeneralParameter!
   updateGeneralParameter(updateGeneralParameterInput: UpdateGeneralParameterInput!): GeneralParameter!
-  removeGeneralParameter(id: BUFFER!): GeneralParameter!
+  deleteGeneralParameter(id: BUFFER!): GeneralParameter!
 }
 
 input CreateGeneralParameterInput {
