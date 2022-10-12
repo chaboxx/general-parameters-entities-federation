@@ -34,7 +34,8 @@ export class GeneralParameterService {
       const generalParameter = await this.prisma.generalParameter.create({
          data: {
             name: data.name,
-            shortName: data.shortname,
+            code: data.code,
+            shortName: data.shortName,
             // TODO: Fix
             idOu: new Buffer(uuid(), "hex"),
             idUserCreate: new Buffer(uuid(), "hex"),
@@ -42,9 +43,10 @@ export class GeneralParameterService {
       });
 
       await this.prisma.generalParameterValue.createMany({
-         data: data.generalparametervalue.map((item) => ({
+         data: data.generalParameterValue.map((item) => ({
             name: item.name,
-            shortName: item.shortname,
+            code: item.code,
+            shortName: item.shortName,
             idGeneralParameter: generalParameter.idGeneralParameter,
             idOu: new Buffer("1234", "hex"),
          })),
@@ -59,34 +61,34 @@ export class GeneralParameterService {
 
    async updateGeneralParameter(data: UpdateGeneralParameterInput) {
       const generalParameter = await this.prisma.generalParameter.update({
-         where: { idGeneralParameter: data.idgeneralparameter },
+         where: { idGeneralParameter: data.idGeneralParameter },
          data: {
             name: data.name,
-            shortName: data.shortname,
+            shortName: data.shortName,
             generalParameterValue: {
-               updateMany: data.generalparametervalue
-                  .filter((item) => !!item.idgeneralparametervalue)
+               updateMany: data.generalParameterValue
+                  .filter((item) => !!item.idGeneralParameterValue)
                   .map((item) => ({
                      where: {
-                        idGeneralParameterValue: item.idgeneralparametervalue,
+                        idGeneralParameterValue: item.idGeneralParameterValue,
                      },
                      data: item,
                   })),
                deleteMany: {
                   idGeneralParameterValue: {
-                     notIn: data.generalparametervalue
-                        .filter((item) => !!item.idgeneralparametervalue)
-                        .map((item) => item.idgeneralparametervalue),
+                     notIn: data.generalParameterValue
+                        .filter((item) => !!item.idGeneralParameterValue)
+                        .map((item) => item.idGeneralParameterValue),
                   },
                },
                createMany: {
-                  data: data.generalparametervalue
-                     .filter((item) => !item.idgeneralparametervalue)
+                  data: data.generalParameterValue
+                     .filter((item) => !item.idGeneralParameterValue)
                      .map((item) => ({
                         ...item,
                         idGeneralParameterValue: undefined,
                         idOu: new Buffer(uuid(), "hex"),
-                        shortName: item.shortname,
+                        shortName: item.shortName,
                      })),
                },
             },

@@ -10,8 +10,12 @@ export class CreateGeneralParameterInput {
 
    @Field()
    @IsString()
-   shortname: string;
+   shortName: string;
+
+   @Field()
+   @IsString()
+   code: string;
 
    @Field(() => [GeneralParameterValueInput])
-   generalparametervalue?: [GeneralParameterValueInput];
+   generalParameterValue?: [GeneralParameterValueInput];
 }

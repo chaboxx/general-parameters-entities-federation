@@ -6,11 +6,11 @@ import { CustomUuidScalar } from "../scalars/buffer-scalar";
 @ObjectType()
 export class GeneralParameter {
    @Field(() => CustomUuidScalar)
-   idgeneralparameter: Buffer;
+   idGeneralParameter: Buffer;
 
-   @Field({ nullable: true })
+   @Field()
    @IsString()
-   idou?: string;
+   idOu?: string;
 
    @Field()
    @IsString()
@@ -18,20 +18,20 @@ export class GeneralParameter {
 
    @Field()
    @IsString()
-   shortname: string;
+   shortName: string;
 
    @Field({ nullable: true })
-   idusercreate?: string;
+   idUserCreate?: string;
 
    @Field({ nullable: true })
-   createdate?: Date;
+   createdAt?: Date;
 
    @Field({ nullable: true })
-   iduserupdate?: string;
+   idUserUpdate?: string;
 
    @Field({ nullable: true })
-   updatedate?: Date;
+   updatedAt?: Date;
 
    @Field(() => [GeneralParameterValue], { nullable: true })
-   generalparametervalue?: [GeneralParameterValue] | null;
+   generalParameterValue?: [GeneralParameterValue] | null;
 }

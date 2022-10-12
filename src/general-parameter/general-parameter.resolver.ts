@@ -10,9 +10,9 @@ export class GeneralParameterResolver {
    constructor(private readonly generalParameter: GeneralParameterService) {}
 
    @ResolveField()
-   generalparametervalue(@Root() generalparameter: GeneralParameter) {
+   generalParameterValue(@Root() generalParameter: GeneralParameter) {
       return this.generalParameter.resolveGeneralParameterValue(
-         generalparameter.idgeneralparameter
+         generalParameter.idGeneralParameter
       );
    }
 

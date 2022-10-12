@@ -3,17 +3,17 @@
 # ------------------------------------------------------
 
 type GeneralParameterValue {
-  idgeneralparametervalue: BUFFER!
-  idou: String
-  idgeneralparameter: GeneralParameter
+  idGeneralParameterValue: BUFFER!
+  idOu: String
+  idGeneralParameter: GeneralParameter
   name: String!
-  shortname: String!
+  shortName: String!
   value: String
   type: String
-  idusercreate: String
-  createdate: Timestamp
-  iduserupdate: String
-  updatedate: Timestamp
+  idUserCreate: String
+  idUserUpdate: String
+  createdAt: Timestamp
+  updatedAt: Timestamp
 }
 
 scalar BUFFER
@@ -24,15 +24,15 @@ scalar BUFFER
 scalar Timestamp
 
 type GeneralParameter {
-  idgeneralparameter: BUFFER!
-  idou: String
+  idGeneralParameter: BUFFER!
+  idOu: String!
   name: String!
-  shortname: String!
-  idusercreate: String
-  createdate: Timestamp
-  iduserupdate: String
-  updatedate: Timestamp
-  generalparametervalue: [GeneralParameterValue!]
+  shortName: String!
+  idUserCreate: String
+  createdAt: Timestamp
+  idUserUpdate: String
+  updatedAt: Timestamp
+  generalParameterValue: [GeneralParameterValue!]
 }
 
 type Query {
@@ -48,22 +48,25 @@ type Mutation {
 
 input CreateGeneralParameterInput {
   name: String!
-  shortname: String!
-  generalparametervalue: [GeneralParameterValueInput!]!
+  shortName: String!
+  code: String!
+  generalParameterValue: [GeneralParameterValueInput!]!
 }
 
 input GeneralParameterValueInput {
-  idou: BUFFER
-  idgeneralparametervalue: BUFFER
+  idOu: BUFFER
+  idGeneralParameterValue: BUFFER
   name: String!
-  shortname: String!
+  shortName: String!
+  code: String!
   value: String
   type: String
 }
 
 input UpdateGeneralParameterInput {
   name: String!
-  shortname: String!
-  generalparametervalue: [GeneralParameterValueInput!]
-  idgeneralparameter: BUFFER!
+  shortName: String!
+  code: String!
+  generalParameterValue: [GeneralParameterValueInput!]
+  idGeneralParameter: BUFFER!
 }

@@ -7,7 +7,7 @@ import { CreateGeneralParameterInput } from "./create-general-parameter.input";
 export class UpdateGeneralParameterInput extends PartialType(CreateGeneralParameterInput) {
    @Field(() => CustomUuidScalar)
    @IsNotEmpty()
-   idgeneralparameter: Buffer;
+   idGeneralParameter: Buffer;
 
    @Field()
    @IsString()
@@ -15,5 +15,9 @@ export class UpdateGeneralParameterInput extends PartialType(CreateGeneralParame
 
    @Field()
    @IsString()
-   shortname: string;
+   shortName: string;
+
+   @Field()
+   @IsString()
+   code: string;
 }

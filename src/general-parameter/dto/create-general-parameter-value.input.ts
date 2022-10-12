@@ -4,16 +4,19 @@ import { CustomUuidScalar } from "../scalars/buffer-scalar";
 @InputType()
 export class GeneralParameterValueInput {
    @Field(() => CustomUuidScalar, { nullable: true })
-   idou: Buffer | null;
+   idOu: Buffer | null;
 
    @Field(() => CustomUuidScalar, { nullable: true })
-   idgeneralparametervalue: Buffer | null;
+   idGeneralParameterValue: Buffer | null;
 
    @Field()
    name: string;
 
    @Field()
-   shortname: string;
+   shortName: string;
+
+   @Field()
+   code: string;
 
    @Field({ nullable: true })
    value?: string;
