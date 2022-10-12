@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { CreateGeneralParameterInput } from "./dto/create-general-parameter.input";
 import { UpdateGeneralParameterInput } from "./dto/update-general-parameter.input";
@@ -23,11 +23,15 @@ export class GeneralParameterService {
    }
 
    async getGeneralParameterById(idGeneralParameter: Buffer) {
-      return await this.prisma.generalParameter.findUnique({
+      const generalParameter = await this.prisma.generalParameter.findUnique({
          where: {
             idGeneralParameter,
          },
       });
+      if (!generalParameter) {
+         throw new NotFoundException("GeneralParameter not found");
+      }
+      return generalParameter;
    }
 
    async createGeneralParameter(data: CreateGeneralParameterInput) {
@@ -48,6 +52,7 @@ export class GeneralParameterService {
             code: item.code,
             shortName: item.shortName,
             idGeneralParameter: generalParameter.idGeneralParameter,
+            idGeneralParameterType: new Buffer(uuid(), "hex"),
             idOu: new Buffer("1234", "hex"),
          })),
       });
@@ -87,6 +92,7 @@ export class GeneralParameterService {
                      .map((item) => ({
                         ...item,
                         idGeneralParameterValue: undefined,
+                        idGeneralParameterType: new Buffer(uuid(), "hex"),
                         idOu: new Buffer(uuid(), "hex"),
                         shortName: item.shortName,
                      })),

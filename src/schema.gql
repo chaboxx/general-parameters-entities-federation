@@ -4,16 +4,17 @@
 
 type GeneralParameterValue {
   idGeneralParameterValue: BUFFER!
-  idOu: String
-  idGeneralParameter: GeneralParameter
+  idGeneralParameter: BUFFER!
+  idGeneralParameterType: BUFFER!
+  idOu: String!
   name: String!
   shortName: String!
   value: String
   type: String
-  idUserCreate: String
-  idUserUpdate: String
-  createdAt: Timestamp
-  updatedAt: Timestamp
+  idUserCreate: String!
+  idUserUpdate: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
 }
 
 scalar BUFFER
@@ -28,11 +29,11 @@ type GeneralParameter {
   idOu: String!
   name: String!
   shortName: String!
-  idUserCreate: String
-  createdAt: Timestamp
-  idUserUpdate: String
-  updatedAt: Timestamp
-  generalParameterValue: [GeneralParameterValue!]
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  idUserCreate: String!
+  idUserUpdate: String!
+  generalParameterValue: [GeneralParameterValue!]!
 }
 
 type Query {
@@ -55,7 +56,9 @@ input CreateGeneralParameterInput {
 
 input GeneralParameterValueInput {
   idOu: BUFFER
+  idGeneralParameter: BUFFER
   idGeneralParameterValue: BUFFER
+  idGeneralParameterType: BUFFER
   name: String!
   shortName: String!
   code: String!

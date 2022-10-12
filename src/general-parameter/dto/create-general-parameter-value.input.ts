@@ -7,7 +7,13 @@ export class GeneralParameterValueInput {
    idOu: Buffer | null;
 
    @Field(() => CustomUuidScalar, { nullable: true })
+   idGeneralParameter: Buffer | null;
+
+   @Field(() => CustomUuidScalar, { nullable: true })
    idGeneralParameterValue: Buffer | null;
+
+   @Field(() => CustomUuidScalar, { nullable: true })
+   idGeneralParameterType?: Buffer | null;
 
    @Field()
    name: string;

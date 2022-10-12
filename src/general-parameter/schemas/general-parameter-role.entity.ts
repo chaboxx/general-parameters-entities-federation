@@ -1,6 +1,5 @@
 import { ObjectType, Field } from "@nestjs/graphql";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";
-import { GeneralParameter } from "./general-parameter.entity";
 @ObjectType()
 export class GeneralParameterRole {
    @Field(() => CustomUuidScalar)
@@ -9,21 +8,20 @@ export class GeneralParameterRole {
    @Field()
    idOu: string;
 
-   @Field({ nullable: true })
+   @Field()
    idStatus: string;
 
-   @Field(() => GeneralParameter, { nullable: true })
-   idGeneralParameter?: GeneralParameter | null;
+   @Field(() => CustomUuidScalar)
+   idGeneralParameter: Buffer;
 
-   @Field({ nullable: true })
-   idUserCreate?: string;
-
-   @Field({ nullable: true })
-   idUserUpdate?: string;
-
-   @Field({ nullable: true })
+   @Field()
    createdAt?: Date;
 
-   @Field({ nullable: true })
+   @Field()
    updatedAt?: Date;
+   @Field()
+   idUserCreate?: string;
+
+   @Field()
+   idUserUpdate?: string;
 }

@@ -20,18 +20,17 @@ export class GeneralParameter {
    @IsString()
    shortName: string;
 
-   @Field({ nullable: true })
-   idUserCreate?: string;
-
-   @Field({ nullable: true })
+   @Field()
    createdAt?: Date;
-
-   @Field({ nullable: true })
-   idUserUpdate?: string;
-
-   @Field({ nullable: true })
+   @Field()
    updatedAt?: Date;
 
-   @Field(() => [GeneralParameterValue], { nullable: true })
-   generalParameterValue?: [GeneralParameterValue] | null;
+   @Field()
+   idUserCreate?: string;
+
+   @Field()
+   idUserUpdate?: string;
+
+   @Field(() => [GeneralParameterValue])
+   generalParameterValue?: [GeneralParameterValue];
 }
