@@ -3,71 +3,77 @@ import { Injectable } from "@nestjs/common";
 import { CreateGeneralParameterInput } from "./dto/create-general-parameter.input";
 import { UpdateGeneralParameterInput } from "./dto/update-general-parameter.input";
 
+import { uuid } from "short-uuid";
 import { PrismaService } from "../prisma.service";
 
 @Injectable()
 export class GeneralParameterService {
    constructor(private readonly prisma: PrismaService) {}
 
-   async resolveGeneralParameterValue(idgeneralparameter: Buffer) {
-      return await this.prisma.generalparametervalue.findMany({
+   async resolveGeneralParameterValue(idGeneralParameter: Buffer) {
+      return await this.prisma.generalParameterValue.findMany({
          where: {
-            idgeneralparameter,
+            idGeneralParameter,
          },
       });
    }
 
    async getGeneralParameters() {
-      return await this.prisma.generalparameter.findMany();
+      return await this.prisma.generalParameter.findMany();
    }
 
-   async getGeneralParameterById(idgeneralparameter: Buffer) {
-      return await this.prisma.generalparameter.findUnique({
+   async getGeneralParameterById(idGeneralParameter: Buffer) {
+      return await this.prisma.generalParameter.findUnique({
          where: {
-            idgeneralparameter,
+            idGeneralParameter,
          },
       });
    }
 
    async createGeneralParameter(data: CreateGeneralParameterInput) {
-      const generalParameter = await this.prisma.generalparameter.create({
+      const generalParameter = await this.prisma.generalParameter.create({
          data: {
             name: data.name,
-            shortname: data.shortname,
+            shortName: data.shortname,
+            // TODO: Fix
+            idOu: new Buffer(uuid(), "hex"),
+            idUserCreate: new Buffer(uuid(), "hex"),
          },
       });
 
-      await this.prisma.generalparametervalue.createMany({
+      await this.prisma.generalParameterValue.createMany({
          data: data.generalparametervalue.map((item) => ({
-            ...item,
-            idgeneralparameter: generalParameter.idgeneralparameter,
+            name: item.name,
+            shortName: item.shortname,
+            idGeneralParameter: generalParameter.idGeneralParameter,
+            idOu: new Buffer("1234", "hex"),
          })),
       });
 
-      const generalParameterObject = await this.prisma.generalparameter.findUnique({
-         where: { idgeneralparameter: generalParameter.idgeneralparameter },
+      const generalParameterObject = await this.prisma.generalParameter.findUnique({
+         where: { idGeneralParameter: generalParameter.idGeneralParameter },
       });
 
       return generalParameterObject;
    }
 
    async updateGeneralParameter(data: UpdateGeneralParameterInput) {
-      const generalParameter = await this.prisma.generalparameter.update({
-         where: { idgeneralparameter: data.idgeneralparameter },
+      const generalParameter = await this.prisma.generalParameter.update({
+         where: { idGeneralParameter: data.idgeneralparameter },
          data: {
             name: data.name,
-            shortname: data.shortname,
-            generalparametervalue: {
+            shortName: data.shortname,
+            generalParameterValue: {
                updateMany: data.generalparametervalue
                   .filter((item) => !!item.idgeneralparametervalue)
                   .map((item) => ({
                      where: {
-                        idgeneralparametervalue: item.idgeneralparametervalue,
+                        idGeneralParameterValue: item.idgeneralparametervalue,
                      },
                      data: item,
                   })),
                deleteMany: {
-                  idgeneralparametervalue: {
+                  idGeneralParameterValue: {
                      notIn: data.generalparametervalue
                         .filter((item) => !!item.idgeneralparametervalue)
                         .map((item) => item.idgeneralparametervalue),
@@ -78,7 +84,9 @@ export class GeneralParameterService {
                      .filter((item) => !item.idgeneralparametervalue)
                      .map((item) => ({
                         ...item,
-                        idgeneralparametervalue: undefined,
+                        idGeneralParameterValue: undefined,
+                        idOu: new Buffer(uuid(), "hex"),
+                        shortName: item.shortname,
                      })),
                },
             },
@@ -88,13 +96,13 @@ export class GeneralParameterService {
       return generalParameter;
    }
 
-   async deleteGeneralParameter(idgeneralparameter: Buffer) {
-      await this.prisma.generalparametervalue.deleteMany({
-         where: { idgeneralparameter },
+   async deleteGeneralParameter(idGeneralParameter: Buffer) {
+      await this.prisma.generalParameterValue.deleteMany({
+         where: { idGeneralParameter },
       });
 
-      const generalParameter = await this.prisma.generalparameter.delete({
-         where: { idgeneralparameter },
+      const generalParameter = await this.prisma.generalParameter.delete({
+         where: { idGeneralParameter },
       });
 
       return generalParameter;
