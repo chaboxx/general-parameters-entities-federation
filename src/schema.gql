@@ -4,15 +4,15 @@
 
 type GeneralParameterValue {
   idGeneralParameterValue: BUFFER!
-  idGeneralParameter: BUFFER!
+  idGeneralParameter: BUFFER
   idGeneralParameterType: BUFFER!
-  idOu: String!
+  idOu: BUFFER
   name: String!
   shortName: String!
   value: String
   type: String
-  idUserCreate: String!
-  idUserUpdate: String!
+  idUserCreate: BUFFER!
+  idUserUpdate: BUFFER!
   createdAt: Timestamp!
   updatedAt: Timestamp!
 }
@@ -26,7 +26,7 @@ scalar Timestamp
 
 type GeneralParameter {
   idGeneralParameter: BUFFER!
-  idOu: String!
+  idOu: BUFFER!
   name: String!
   shortName: String!
   createdAt: Timestamp!
@@ -67,9 +67,21 @@ input GeneralParameterValueInput {
 }
 
 input UpdateGeneralParameterInput {
+  idOu: BUFFER!
+  idGeneralParameter: BUFFER!
   name: String!
   shortName: String!
   code: String!
-  generalParameterValue: [GeneralParameterValueInput!]
-  idGeneralParameter: BUFFER!
+  generalParameterValue: [UpdateGeneralParameterValueInput!]
+}
+
+input UpdateGeneralParameterValueInput {
+  idOu: BUFFER!
+  idGeneralParameter: BUFFER
+  idGeneralParameterValue: BUFFER
+  name: String!
+  shortName: String!
+  code: String!
+  value: String
+  type: String
 }
