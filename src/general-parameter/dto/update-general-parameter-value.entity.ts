@@ -2,18 +2,15 @@ import { Field, InputType } from "@nestjs/graphql";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";
 
 @InputType()
-export class GeneralParameterValueInput {
-   @Field(() => CustomUuidScalar, { nullable: true })
-   idOu?: Buffer | null;
+export class UpdateGeneralParameterValueInput {
+   @Field(() => CustomUuidScalar)
+   idOu: Buffer;
 
    @Field(() => CustomUuidScalar, { nullable: true })
    idGeneralParameter?: Buffer | null;
 
    @Field(() => CustomUuidScalar, { nullable: true })
    idGeneralParameterValue?: Buffer | null;
-
-   @Field(() => CustomUuidScalar, { nullable: true })
-   idGeneralParameterType?: Buffer | null;
 
    @Field()
    name: string;

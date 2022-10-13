@@ -1,16 +1,15 @@
-import { ObjectType, Field } from "@nestjs/graphql";
-import { GeneralParameterValue } from "./general-parameter-value.entity";
+import { Field, ObjectType } from "@nestjs/graphql";
 import { IsString } from "class-validator";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";
+import { GeneralParameterValue } from "./general-parameter-value.entity";
 
 @ObjectType()
 export class GeneralParameter {
    @Field(() => CustomUuidScalar)
-   idGeneralParameter: Buffer;
+   idGeneralParameter?: Buffer;
 
-   @Field()
-   @IsString()
-   idOu?: string;
+   @Field(() => CustomUuidScalar)
+   idOu?: Buffer;
 
    @Field()
    @IsString()

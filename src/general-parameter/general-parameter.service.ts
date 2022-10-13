@@ -41,8 +41,10 @@ export class GeneralParameterService {
             code: data.code,
             shortName: data.shortName,
             // TODO: Fix
-            idOu: new Buffer(uuid(), "hex"),
-            idUserCreate: new Buffer(uuid(), "hex"),
+            idOu: new Buffer(uuid(), "base64"),
+            idUserCreate: new Buffer(uuid(), "base64"),
+            idUserUpdate: new Buffer(uuid(), "base64"),
+            idStatus: uuid(),
          },
       });
 
@@ -52,8 +54,11 @@ export class GeneralParameterService {
             code: item.code,
             shortName: item.shortName,
             idGeneralParameter: generalParameter.idGeneralParameter,
-            idGeneralParameterType: new Buffer(uuid(), "hex"),
-            idOu: new Buffer("1234", "hex"),
+            idGeneralParameterType: new Buffer(uuid(), "base64"),
+            idOu: generalParameter.idOu,
+            idUserCreate: new Buffer(uuid(), "base64"),
+            idUserUpdate: new Buffer(uuid(), "base64"),
+            idStatus: uuid(),
          })),
       });
 
@@ -91,10 +96,13 @@ export class GeneralParameterService {
                      .filter((item) => !item.idGeneralParameterValue)
                      .map((item) => ({
                         ...item,
-                        idGeneralParameterValue: undefined,
-                        idGeneralParameterType: new Buffer(uuid(), "hex"),
-                        idOu: new Buffer(uuid(), "hex"),
+                        idOu: data.idOu,
+                        name: item.name,
                         shortName: item.shortName,
+                        idGeneralParameterType: new Buffer(uuid(), "base64"),
+                        idUserCreate: new Buffer(uuid(), "base64"),
+                        idUserUpdate: new Buffer(uuid(), "base64"),
+                        idStatus: uuid(),
                      })),
                },
             },

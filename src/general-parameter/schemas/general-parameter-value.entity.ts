@@ -1,18 +1,18 @@
-import { ObjectType, Field } from "@nestjs/graphql";
+import { Field, ObjectType } from "@nestjs/graphql";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";
 @ObjectType()
 export class GeneralParameterValue {
    @Field(() => CustomUuidScalar)
-   idGeneralParameterValue: Buffer;
+   idGeneralParameterValue?: Buffer;
 
-   @Field(() => CustomUuidScalar)
-   idGeneralParameter: Buffer;
+   @Field(() => CustomUuidScalar, { nullable: true })
+   idGeneralParameter?: Buffer | null;
 
    @Field(() => CustomUuidScalar)
    idGeneralParameterType?: Buffer;
 
-   @Field()
-   idOu?: string;
+   @Field(() => CustomUuidScalar, { nullable: true })
+   idOu?: Buffer | null;
 
    @Field()
    name: string;
@@ -26,11 +26,11 @@ export class GeneralParameterValue {
    @Field({ nullable: true })
    type?: string;
 
-   @Field()
-   idUserCreate?: string;
+   @Field(() => CustomUuidScalar)
+   idUserCreate?: Buffer;
 
-   @Field()
-   idUserUpdate?: string;
+   @Field(() => CustomUuidScalar)
+   idUserUpdate?: Buffer;
 
    @Field()
    createdAt?: Date;
