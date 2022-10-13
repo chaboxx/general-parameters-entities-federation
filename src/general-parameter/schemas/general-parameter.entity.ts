@@ -28,11 +28,11 @@ export class GeneralParameter {
    @Field()
    updatedAt?: Date;
 
-   @Field()
-   idUserCreate?: string;
+   @Field(() => CustomUuidScalar)
+   idUserCreate?: Buffer;
 
-   @Field()
-   idUserUpdate?: string;
+   @Field(() => CustomUuidScalar)
+   idUserUpdate?: Buffer;
 
    @Field(() => [GeneralParameterValue])
    generalParameterValue?: [GeneralParameterValue];

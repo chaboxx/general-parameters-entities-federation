@@ -19,9 +19,10 @@ export class GeneralParameterRole {
 
    @Field()
    updatedAt?: Date;
-   @Field()
-   idUserCreate?: string;
 
-   @Field()
-   idUserUpdate?: string;
+   @Field(() => CustomUuidScalar)
+   idUserCreate?: Buffer;
+
+   @Field(() => CustomUuidScalar)
+   idUserUpdate?: Buffer;
 }
