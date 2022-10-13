@@ -20,7 +20,11 @@ export class GeneralParameter {
    shortName: string;
 
    @Field()
+   code: string;
+
+   @Field()
    createdAt?: Date;
+
    @Field()
    updatedAt?: Date;
 

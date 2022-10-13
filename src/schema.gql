@@ -9,6 +9,7 @@ type GeneralParameterValue {
   idOu: BUFFER
   name: String!
   shortName: String!
+  code: String!
   value: String
   type: String
   idUserCreate: BUFFER!
@@ -29,6 +30,7 @@ type GeneralParameter {
   idOu: BUFFER!
   name: String!
   shortName: String!
+  code: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
   idUserCreate: String!

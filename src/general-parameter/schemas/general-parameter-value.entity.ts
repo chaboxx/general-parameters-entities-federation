@@ -20,6 +20,9 @@ export class GeneralParameterValue {
    @Field()
    shortName: string;
 
+   @Field()
+   code: string;
+
    @Field({ nullable: true })
    value?: string;
 
