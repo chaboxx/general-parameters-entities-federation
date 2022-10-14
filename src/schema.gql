@@ -69,7 +69,7 @@ input GeneralParameterValueInput {
 }
 
 input UpdateGeneralParameterInput {
-  idOu: BUFFER!
+  idOu: BUFFER
   idGeneralParameter: BUFFER!
   name: String!
   shortName: String!
@@ -78,7 +78,6 @@ input UpdateGeneralParameterInput {
 }
 
 input UpdateGeneralParameterValueInput {
-  idOu: BUFFER!
   idGeneralParameter: BUFFER
   idGeneralParameterValue: BUFFER
   name: String!

@@ -96,13 +96,13 @@ export class GeneralParameterService {
                      .filter((item) => !item.idGeneralParameterValue)
                      .map((item) => ({
                         ...item,
-                        idOu: data.idOu,
                         name: item.name,
                         shortName: item.shortName,
                         idGeneralParameterType: new Buffer(uuid(), "base64"),
                         idUserCreate: new Buffer(uuid(), "base64"),
                         idUserUpdate: new Buffer(uuid(), "base64"),
                         idStatus: uuid(),
+                        idOu: data.idOu,
                      })),
                },
             },

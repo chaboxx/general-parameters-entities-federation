@@ -1,13 +1,12 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsString } from "class-validator";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";
 import { UpdateGeneralParameterValueInput } from "./update-general-parameter-value.entity";
 
 @InputType()
 export class UpdateGeneralParameterInput {
-   @Field(() => CustomUuidScalar)
-   @IsNotEmpty()
-   idOu: Buffer;
+   @Field(() => CustomUuidScalar, { nullable: true })
+   idOu?: Buffer | null;
 
    @Field(() => CustomUuidScalar)
    idGeneralParameter: Buffer;

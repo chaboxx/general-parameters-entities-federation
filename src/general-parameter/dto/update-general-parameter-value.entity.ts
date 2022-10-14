@@ -3,9 +3,6 @@ import { CustomUuidScalar } from "../scalars/buffer-scalar";
 
 @InputType()
 export class UpdateGeneralParameterValueInput {
-   @Field(() => CustomUuidScalar)
-   idOu: Buffer;
-
    @Field(() => CustomUuidScalar, { nullable: true })
    idGeneralParameter?: Buffer | null;
 
