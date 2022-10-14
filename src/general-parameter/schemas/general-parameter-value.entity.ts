@@ -35,9 +35,9 @@ export class GeneralParameterValue {
    @Field(() => CustomUuidScalar)
    idUserUpdate?: Buffer;
 
-   @Field()
+   @Field(() => Date)
    createdAt?: Date;
 
-   @Field()
+   @Field(() => Date)
    updatedAt?: Date;
 }

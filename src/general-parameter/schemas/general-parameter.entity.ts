@@ -22,10 +22,10 @@ export class GeneralParameter {
    @Field()
    code: string;
 
-   @Field()
+   @Field(() => Date)
    createdAt?: Date;
 
-   @Field()
+   @Field(() => Date)
    updatedAt?: Date;
 
    @Field(() => CustomUuidScalar)

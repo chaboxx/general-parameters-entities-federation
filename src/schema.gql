@@ -14,16 +14,16 @@ type GeneralParameterValue {
   type: String
   idUserCreate: BUFFER!
   idUserUpdate: BUFFER!
-  createdAt: Timestamp!
-  updatedAt: Timestamp!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 scalar BUFFER
 
 """
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
-scalar Timestamp
+scalar DateTime
 
 type GeneralParameter {
   idGeneralParameter: BUFFER!
@@ -31,8 +31,8 @@ type GeneralParameter {
   name: String!
   shortName: String!
   code: String!
-  createdAt: Timestamp!
-  updatedAt: Timestamp!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   idUserCreate: BUFFER!
   idUserUpdate: BUFFER!
   generalParameterValue: [GeneralParameterValue!]!

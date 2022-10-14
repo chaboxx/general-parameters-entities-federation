@@ -14,7 +14,6 @@ import { CustomUuidScalar } from "./general-parameter/scalars/buffer-scalar";
          playground: false,
          plugins: [ApolloServerPluginLandingPageLocalDefault()],
          autoSchemaFile: join(process.cwd(), "src/schema.gql"),
-         buildSchemaOptions: { dateScalarMode: "timestamp" },
          resolvers: { BUFFER: CustomUuidScalar },
       }),
       GeneralParameterModule,
