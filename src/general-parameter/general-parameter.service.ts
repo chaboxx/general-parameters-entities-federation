@@ -75,6 +75,7 @@ export class GeneralParameterService {
          data: {
             name: data.name,
             shortName: data.shortName,
+            code: data.code,
             generalParameterValue: {
                updateMany: data.generalParameterValue
                   .filter((item) => !!item.idGeneralParameterValue)
@@ -98,6 +99,7 @@ export class GeneralParameterService {
                         ...item,
                         name: item.name,
                         shortName: item.shortName,
+                        code: item.code,
                         idGeneralParameterType: new Buffer(uuid(), "base64"),
                         idUserCreate: new Buffer(uuid(), "base64"),
                         idUserUpdate: new Buffer(uuid(), "base64"),
