@@ -22,6 +22,40 @@ export class GeneralParameterService {
       return await this.prisma.generalParameter.findMany();
    }
 
+   async getGeneralParametersByCode(code: string) {
+      return await this.prisma.generalParameter.findMany({
+         where: {
+            code: {
+               equals: code,
+            },
+         },
+      });
+   }
+
+   // async getGeneralParameterValueByParentId(idGeneralParameterValueParent: Buffer) {
+   //    return await this.prisma.generalParameter.findUnique({
+   //       where: {
+   //          idGeneralParameterParent: idGeneralParameterValueParent,
+   //       },
+   //    });
+   // }
+
+   async getGeneralParameterValueByArgs(name: string, code: string, shortName: string) {
+      return await this.prisma.generalParameterValue.findMany({
+         where: {
+            name: {
+               contains: name,
+            },
+            code: {
+               contains: code,
+            },
+            shortName: {
+               contains: shortName,
+            },
+         },
+      });
+   }
+
    async getGeneralParameterById(idGeneralParameter: Buffer) {
       const generalParameter = await this.prisma.generalParameter.findUnique({
          where: {
@@ -35,17 +69,6 @@ export class GeneralParameterService {
    }
 
    async createGeneralParameter(data: CreateGeneralParameterInput) {
-      if (!data.name.length) {
-         throw new BadRequestException("Name is required");
-      }
-      if (!data.shortName.length) {
-         throw new BadRequestException("ShortName is required");
-      }
-
-      if (data.code.length < 3) {
-         throw new BadRequestException("Code must be 3 characters long");
-      }
-
       const generalParameter = await this.prisma.generalParameter.create({
          data: {
             name: data.name,
@@ -91,12 +114,6 @@ export class GeneralParameterService {
                updateMany: data.generalParameterValue
                   .filter((item) => !!item.idGeneralParameterValue)
                   .map((item) => {
-                     if (!item.name.length) {
-                        throw new BadRequestException("Name is required");
-                     }
-                     if (!item.shortName.length) {
-                        throw new BadRequestException("ShortName is required");
-                     }
                      if (item.code.length < 3) {
                         throw new BadRequestException("Code must be 3 characters long");
                      }
@@ -118,12 +135,6 @@ export class GeneralParameterService {
                   data: data.generalParameterValue
                      .filter((item) => !item.idGeneralParameterValue)
                      .map((item) => {
-                        if (!data.name.length) {
-                           throw new BadRequestException("Name is required");
-                        }
-                        if (!data.shortName.length) {
-                           throw new BadRequestException("ShortName is required");
-                        }
                         if (item.code.length < 3) {
                            throw new BadRequestException("Code must be 3 characters long");
                         }
