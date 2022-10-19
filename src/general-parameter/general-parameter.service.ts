@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 
 import { CreateGeneralParameterInput } from "./dto/create-general-parameter.input";
 import { UpdateGeneralParameterInput } from "./dto/update-general-parameter.input";
@@ -20,6 +20,40 @@ export class GeneralParameterService {
 
    async getGeneralParameters() {
       return await this.prisma.generalParameter.findMany();
+   }
+
+   async getGeneralParametersByCode(code: string) {
+      return await this.prisma.generalParameter.findMany({
+         where: {
+            code: {
+               equals: code,
+            },
+         },
+      });
+   }
+
+   // async getGeneralParameterValueByParentId(idGeneralParameterValueParent: Buffer) {
+   //    return await this.prisma.generalParameter.findUnique({
+   //       where: {
+   //          idGeneralParameterParent: idGeneralParameterValueParent,
+   //       },
+   //    });
+   // }
+
+   async getGeneralParameterValueByArgs(name: string, code: string, shortName: string) {
+      return await this.prisma.generalParameterValue.findMany({
+         where: {
+            name: {
+               contains: name,
+            },
+            code: {
+               contains: code,
+            },
+            shortName: {
+               contains: shortName,
+            },
+         },
+      });
    }
 
    async getGeneralParameterById(idGeneralParameter: Buffer) {
@@ -75,15 +109,21 @@ export class GeneralParameterService {
          data: {
             name: data.name,
             shortName: data.shortName,
+            code: data.code,
             generalParameterValue: {
                updateMany: data.generalParameterValue
                   .filter((item) => !!item.idGeneralParameterValue)
-                  .map((item) => ({
-                     where: {
-                        idGeneralParameterValue: item.idGeneralParameterValue,
-                     },
-                     data: item,
-                  })),
+                  .map((item) => {
+                     if (item.code.length < 3) {
+                        throw new BadRequestException("Code must be 3 characters long");
+                     }
+                     return {
+                        where: {
+                           idGeneralParameterValue: item.idGeneralParameterValue,
+                        },
+                        data: item,
+                     };
+                  }),
                deleteMany: {
                   idGeneralParameterValue: {
                      notIn: data.generalParameterValue
@@ -94,16 +134,22 @@ export class GeneralParameterService {
                createMany: {
                   data: data.generalParameterValue
                      .filter((item) => !item.idGeneralParameterValue)
-                     .map((item) => ({
-                        ...item,
-                        name: item.name,
-                        shortName: item.shortName,
-                        idGeneralParameterType: new Buffer(uuid(), "base64"),
-                        idUserCreate: new Buffer(uuid(), "base64"),
-                        idUserUpdate: new Buffer(uuid(), "base64"),
-                        idStatus: uuid(),
-                        idOu: data.idOu,
-                     })),
+                     .map((item) => {
+                        if (item.code.length < 3) {
+                           throw new BadRequestException("Code must be 3 characters long");
+                        }
+                        return {
+                           ...item,
+                           name: item.name,
+                           shortName: item.shortName,
+                           code: item.code,
+                           idGeneralParameterType: new Buffer(uuid(), "base64"),
+                           idUserCreate: new Buffer(uuid(), "base64"),
+                           idUserUpdate: new Buffer(uuid(), "base64"),
+                           idStatus: uuid(),
+                           idOu: data.idOu,
+                        };
+                     }),
                },
             },
          },

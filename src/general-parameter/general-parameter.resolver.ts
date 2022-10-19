@@ -21,6 +21,20 @@ export class GeneralParameterResolver {
       return this.generalParameter.getGeneralParameters();
    }
 
+   @Query(() => [GeneralParameter], { name: "getGeneralParametersByCode" })
+   getGeneralParametersByCode(@Args("code", { type: () => String }) code: string) {
+      return this.generalParameter.getGeneralParametersByCode(code);
+   }
+
+   @Query(() => [GeneralParameter], { name: "getGeneralParameterValueByArgs" })
+   getGeneralParameterValueByArgs(
+      @Args("name") name: string,
+      @Args("code") code: string,
+      @Args("shortName") shortName: string
+   ) {
+      return this.generalParameter.getGeneralParameterValueByArgs(name, code, shortName);
+   }
+
    @Query(() => GeneralParameter, { name: "getGeneralParameterById" })
    findOne(@Args("id", { type: () => CustomUuidScalar }) id: Buffer) {
       return this.generalParameter.getGeneralParameterById(id);

@@ -12,6 +12,9 @@ export class GeneralParameter {
    @Field(() => CustomUuidScalar)
    idOu?: Buffer;
 
+   @Field(() => CustomUuidScalar, { nullable: true })
+   idGeneralParameterParent?: Buffer | null;
+
    @Field()
    @IsString()
    name: string;
