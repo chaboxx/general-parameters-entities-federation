@@ -6,6 +6,7 @@ import { ApolloFederationDriver, ApolloFederationDriverConfig } from "@nestjs/ap
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { GeneralParameterModule } from "./general-parameter/general-parameter.module";
 import { CustomUuidScalar } from "./general-parameter/scalars/buffer-scalar";
+import { Entity } from "./general-parameter/schemas/external/entity.entity";
 
 @Module({
    imports: [
@@ -15,6 +16,9 @@ import { CustomUuidScalar } from "./general-parameter/scalars/buffer-scalar";
          plugins: [ApolloServerPluginLandingPageLocalDefault()],
          autoSchemaFile: join(process.cwd(), "src/schema.gql"),
          resolvers: { BUFFER: CustomUuidScalar },
+         buildSchemaOptions: {
+            orphanedTypes: [Entity],
+         }
       }),
       GeneralParameterModule,
    ],
