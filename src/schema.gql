@@ -25,7 +25,6 @@ directive @override(from: String!) on FIELD_DEFINITION
 type GeneralParameterValue {
   idGeneralParameterValue: BUFFER!
   idGeneralParameter: BUFFER
-  idGeneralParameterType: BUFFER!
   idOu: BUFFER
   name: String!
   shortName: String!

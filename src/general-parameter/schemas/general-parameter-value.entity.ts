@@ -8,9 +8,6 @@ export class GeneralParameterValue {
    @Field(() => CustomUuidScalar, { nullable: true })
    idGeneralParameter?: Buffer | null;
 
-   @Field(() => CustomUuidScalar)
-   idGeneralParameterType?: Buffer;
-
    @Field(() => CustomUuidScalar, { nullable: true })
    idOu?: Buffer | null;
 
