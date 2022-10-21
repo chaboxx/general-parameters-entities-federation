@@ -1,6 +1,4 @@
-import { Injectable } from "@nestjs/common";
-
-import "../general-parameter/dto/update-general-parameter.input";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { PrismaService } from "../prisma.service";
 
@@ -18,6 +16,29 @@ export class GeneralParameterValueService {
 
    async getAllGeneralParameterValues() {
       return await this.prisma.generalParameterValue.findMany();
+   }
+
+   async getGeneralParameterValuesByGeneralParameterId(idGeneralParameter: Buffer) {
+      return await this.prisma.generalParameterValue.findMany({
+         where: {
+            idGeneralParameter: {
+               equals: idGeneralParameter,
+            },
+         },
+      });
+   }
+
+   async getGeneralParameterValueById(idGeneralParameterValue: Buffer) {
+      const generalParameterValue = await this.prisma.generalParameterValue.findUnique({
+         where: {
+            idGeneralParameterValue,
+         },
+      });
+      if (!generalParameterValue) {
+         throw new NotFoundException("GeneralParameterValue not found");
+      }
+
+      return generalParameterValue;
    }
 
    async getGeneralParameterValueByArgs(userInput: string, limit?: number) {

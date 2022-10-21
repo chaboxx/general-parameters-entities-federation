@@ -47,6 +47,8 @@ type Query {
   getGeneralParameterById(id: BUFFER!): GeneralParameter!
   getGeneralParameterValueByArgs(userInput: String!, limit: Int): [GeneralParameterValue!]!
   getAllGeneralParameterValues: [GeneralParameterValue!]!
+  getGeneralParameterValueByGeneralParameterId(idGeneralParameter: BUFFER!): [GeneralParameterValue!]!
+  getGeneralParameterValueById(idGeneralParameterValue: BUFFER!): GeneralParameterValue!
 }
 
 type Mutation {

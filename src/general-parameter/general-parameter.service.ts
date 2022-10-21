@@ -14,12 +14,23 @@ export class GeneralParameterService {
       return await this.prisma.generalParameterValue.findMany({
          where: {
             idGeneralParameter,
+            AND: {
+               idStatus: {
+                  equals: "ACTIVE",
+               },
+            },
          },
       });
    }
 
    async getGeneralParameters() {
-      return await this.prisma.generalParameter.findMany();
+      return await this.prisma.generalParameter.findMany({
+         where: {
+            idStatus: {
+               equals: "ACTIVE",
+            },
+         },
+      });
    }
 
    async getGeneralParametersByCode(code: string) {
@@ -146,13 +157,33 @@ export class GeneralParameterService {
       return generalParameter;
    }
 
-   async deleteGeneralParameter(idGeneralParameter: Buffer) {
-      await this.prisma.generalParameterValue.deleteMany({
-         where: { idGeneralParameter },
-      });
+   // async deleteGeneralParameter(idGeneralParameter: Buffer) {
+   //    await this.prisma.generalParameterValue.deleteMany({
+   //       where: { idGeneralParameter },
+   //    });
 
-      const generalParameter = await this.prisma.generalParameter.delete({
-         where: { idGeneralParameter },
+   //    const generalParameter = await this.prisma.generalParameter.delete({
+   //       where: { idGeneralParameter },
+   //    });
+
+   //    return generalParameter;
+   // }
+   async deleteGeneralParameter(idGeneralParameter: Buffer) {
+      const generalParameter = await this.prisma.generalParameter.update({
+         where: { idGeneralParameter: idGeneralParameter },
+         data: {
+            idStatus: "INACTIVE",
+            generalParameterValue: {
+               updateMany: {
+                  where: {
+                     idGeneralParameter,
+                  },
+                  data: {
+                     idStatus: "INACTIVE",
+                  },
+               },
+            },
+         },
       });
 
       return generalParameter;
