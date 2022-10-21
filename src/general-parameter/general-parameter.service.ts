@@ -19,16 +19,11 @@ export class GeneralParameterService {
    }
    //
    async getGeneralParameterValue(idGeneralParameterValue : string){
-      console.log({idGeneralParameterValue});
-      console.log({buffer : Buffer.from(idGeneralParameterValue,"hex")})
       const generalParameterValue = await this.prisma.generalParameterValue.findUnique({
          where: {
             idGeneralParameterValue : Buffer.from(idGeneralParameterValue ,"hex"),
          }
       });
-
-      console.log({generalParameterValue})
-
       return generalParameterValue;
    }
 

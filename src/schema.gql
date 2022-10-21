@@ -61,7 +61,6 @@ type GeneralParameter {
 
 type Entity {
   idEntity: BUFFER!
-  market: GeneralParameterValue!
 }
 
 type Query {
