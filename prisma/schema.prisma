@@ -8,42 +8,41 @@ datasource db {
 }
 
 model generalParameter {
-  idGeneralParameter       Bytes                   @id @unique(map: "idgeneralparameter_UNIQUE") @default(dbgenerated("(uuid_to_bin(uuid()))")) @db.Binary(16)
-  idOu                     Bytes                   @db.Binary(16)
-  idGeneralParameterParent Bytes?                  @db.Binary(16)
-  code                     String                  @unique(map: "code_UNIQUE") @db.VarChar(14)
-  name                     String                  @db.VarChar(45)
-  shortName                String                  @db.VarChar(10)
-  idStatus                 String                  @db.VarChar(20)
-  idUserCreate             Bytes                   @db.Binary(16)
-  createdAt                DateTime                @default(dbgenerated("(now())")) @db.DateTime(0)
-  idUserUpdate             Bytes                   @db.Binary(16)
-  updatedAt                DateTime                @default(dbgenerated("(now())")) @db.DateTime(0)
-  generalParameter         generalParameter?       @relation("generalParameterTogeneralParameter", fields: [idGeneralParameterParent], references: [idGeneralParameter], onDelete: NoAction, onUpdate: NoAction, map: "fk_generalParameter_generalParameter1")
-  other_generalParameter   generalParameter[]      @relation("generalParameterTogeneralParameter")
-  generalParameterValue    generalParameterValue[]
-  generalParameter_Role    generalParameter_Role[]
+  idGeneralParameter                                                                    Bytes                   @id @unique(map: "idgeneralparameter_UNIQUE") @default(dbgenerated("(uuid_to_bin(uuid()))")) @db.Binary(16)
+  idOu                                                                                  Bytes                   @db.Binary(16)
+  code                                                                                  String                  @unique(map: "code_UNIQUE") @db.VarChar(14)
+  name                                                                                  String                  @db.VarChar(45)
+  shortName                                                                             String                  @db.VarChar(10)
+  idGeneralParameterValue                                                               Bytes?                  @db.Binary(16)
+  idStatus                                                                              String                  @db.VarChar(20)
+  idUserCreate                                                                          Bytes                   @db.Binary(16)
+  createdAt                                                                             DateTime                @default(dbgenerated("(now())")) @db.DateTime(0)
+  idUserUpdate                                                                          Bytes                   @db.Binary(16)
+  updatedAt                                                                             DateTime                @default(dbgenerated("(now())")) @db.DateTime(0)
+  generalParameterValue_generalParameter_idGeneralParameterValueTogeneralParameterValue generalParameterValue?  @relation("generalParameter_idGeneralParameterValueTogeneralParameterValue", fields: [idGeneralParameterValue], references: [idGeneralParameterValue], onDelete: NoAction, onUpdate: NoAction, map: "fk_generalParameter_generalParameterValue1")
+  generalParameterValue                                                                 generalParameterValue[]
+  generalParameter_Role                                                                 generalParameter_Role[]
 
-  @@index([idGeneralParameterParent], map: "fk_generalParameter_generalParameter1_idx")
+  @@index([idGeneralParameterValue], map: "fk_generalParameter_generalParameterValue1_idx")
 }
 
 model generalParameterValue {
-  idGeneralParameterValue Bytes            @unique(map: "idgeneralparametervalue_UNIQUE") @default(dbgenerated("(uuid_to_bin(uuid()))")) @db.Binary(16)
-  idOu                    Bytes            @db.Binary(16)
-  idGeneralParameter      Bytes            @db.Binary(16)
-  idGeneralParameterType  Bytes            @db.Binary(16)
-  code                    String           @unique(map: "code_UNIQUE") @db.VarChar(14)
-  name                    String           @db.VarChar(45)
-  shortName               String           @db.VarChar(10)
-  value                   String?          @db.VarChar(45)
-  idStatus                String           @db.VarChar(20)
-  idUserCreate            Bytes            @db.Binary(16)
-  createdAt               DateTime         @default(dbgenerated("(now())")) @db.DateTime(0)
-  idUserUpdate            Bytes            @db.Binary(16)
-  updatedAt               DateTime         @default(dbgenerated("(now())")) @db.DateTime(0)
-  generalParameter        generalParameter @relation(fields: [idGeneralParameter], references: [idGeneralParameter], onDelete: NoAction, onUpdate: NoAction, map: "fk_generalParameterValue_generalParameter")
+  idGeneralParameterValue                                                          Bytes              @id @unique(map: "idgeneralparametervalue_UNIQUE") @default(dbgenerated("(uuid_to_bin(uuid()))")) @db.Binary(16)
+  idOu                                                                             Bytes              @db.Binary(16)
+  idGeneralParameter                                                               Bytes              @db.Binary(16)
+  idGeneralParameterType                                                           Bytes              @db.Binary(16)
+  code                                                                             String             @unique(map: "code_UNIQUE") @db.VarChar(14)
+  name                                                                             String             @db.VarChar(45)
+  shortName                                                                        String             @db.VarChar(10)
+  value                                                                            String?            @db.VarChar(45)
+  idStatus                                                                         String             @db.VarChar(20)
+  idUserCreate                                                                     Bytes              @db.Binary(16)
+  createdAt                                                                        DateTime           @default(dbgenerated("(now())")) @db.DateTime(0)
+  idUserUpdate                                                                     Bytes              @db.Binary(16)
+  updatedAt                                                                        DateTime           @default(dbgenerated("(now())")) @db.DateTime(0)
+  generalParameter                                                                 generalParameter   @relation(fields: [idGeneralParameter], references: [idGeneralParameter], onDelete: NoAction, onUpdate: NoAction, map: "fk_generalParameterValue_generalParameter")
+  generalParameter_generalParameter_idGeneralParameterValueTogeneralParameterValue generalParameter[] @relation("generalParameter_idGeneralParameterValueTogeneralParameterValue")
 
-  @@id([idGeneralParameterValue, idGeneralParameter])
   @@index([idGeneralParameter], map: "fk_generalParameterValue_generalParameter_idx")
 }
 

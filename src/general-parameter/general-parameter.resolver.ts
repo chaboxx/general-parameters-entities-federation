@@ -3,7 +3,7 @@ import { GeneralParameterService } from "./general-parameter.service";
 import { GeneralParameter } from "./schemas/general-parameter.entity";
 import { CreateGeneralParameterInput } from "./dto/create-general-parameter.input";
 import { UpdateGeneralParameterInput } from "./dto/update-general-parameter.input";
-import { CustomUuidScalar } from "./scalars/buffer-scalar";
+import { CustomUuidScalar } from "../shared/scalars/buffer-scalar";
 
 @Resolver(() => GeneralParameter)
 export class GeneralParameterResolver {
@@ -24,15 +24,6 @@ export class GeneralParameterResolver {
    @Query(() => [GeneralParameter], { name: "getGeneralParametersByCode" })
    getGeneralParametersByCode(@Args("code", { type: () => String }) code: string) {
       return this.generalParameter.getGeneralParametersByCode(code);
-   }
-
-   @Query(() => [GeneralParameter], { name: "getGeneralParameterValueByArgs" })
-   getGeneralParameterValueByArgs(
-      @Args("name") name: string,
-      @Args("code") code: string,
-      @Args("shortName") shortName: string
-   ) {
-      return this.generalParameter.getGeneralParameterValueByArgs(name, code, shortName);
    }
 
    @Query(() => GeneralParameter, { name: "getGeneralParameterById" })

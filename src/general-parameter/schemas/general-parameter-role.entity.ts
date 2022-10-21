@@ -1,5 +1,5 @@
 import { ObjectType, Field } from "@nestjs/graphql";
-import { CustomUuidScalar } from "../scalars/buffer-scalar";
+import { CustomUuidScalar } from "../../shared/scalars/buffer-scalar";
 @ObjectType()
 export class GeneralParameterRole {
    @Field(() => CustomUuidScalar)

@@ -1,5 +1,6 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { CustomUuidScalar } from "../scalars/buffer-scalar";
+import { IsNotEmpty, IsString } from "class-validator";
+import { CustomUuidScalar } from "../../shared/scalars/buffer-scalar";
 
 @InputType()
 export class GeneralParameterValueInput {
@@ -16,17 +17,25 @@ export class GeneralParameterValueInput {
    idGeneralParameterType?: Buffer | null;
 
    @Field()
+   @IsString()
+   @IsNotEmpty()
    name: string;
 
    @Field()
+   @IsString()
+   @IsNotEmpty()
    shortName: string;
 
    @Field()
+   @IsString()
+   @IsNotEmpty()
    code: string;
 
    @Field({ nullable: true })
+   @IsString()
    value?: string;
 
    @Field({ nullable: true })
+   @IsString()
    type?: string;
 }

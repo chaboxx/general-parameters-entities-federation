@@ -5,7 +5,8 @@ import { join } from "path";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { GeneralParameterModule } from "./general-parameter/general-parameter.module";
-import { CustomUuidScalar } from "./general-parameter/scalars/buffer-scalar";
+import { CustomUuidScalar } from "./shared/scalars/buffer-scalar";
+import { GeneralParameterValueModule } from "./general-parameter-value/general-parameter-value.module";
 
 @Module({
    imports: [
@@ -17,6 +18,7 @@ import { CustomUuidScalar } from "./general-parameter/scalars/buffer-scalar";
          resolvers: { BUFFER: CustomUuidScalar },
       }),
       GeneralParameterModule,
+      GeneralParameterValueModule,
    ],
    controllers: [],
    providers: [PrismaService],

@@ -32,26 +32,10 @@ export class GeneralParameterService {
       });
    }
 
-   // async getGeneralParameterValueByParentId(idGeneralParameterValueParent: Buffer) {
-   //    return await this.prisma.generalParameter.findUnique({
-   //       where: {
-   //          idGeneralParameterParent: idGeneralParameterValueParent,
-   //       },
-   //    });
-   // }
-
-   async getGeneralParameterValueByArgs(name: string, code: string, shortName: string) {
-      return await this.prisma.generalParameterValue.findMany({
+   async getGeneralParameterByParentId(idGeneralParameterValue: Buffer) {
+      return await this.prisma.generalParameter.findMany({
          where: {
-            name: {
-               contains: name,
-            },
-            code: {
-               contains: code,
-            },
-            shortName: {
-               contains: shortName,
-            },
+            idGeneralParameterValue,
          },
       });
    }
@@ -65,20 +49,23 @@ export class GeneralParameterService {
       if (!generalParameter) {
          throw new NotFoundException("GeneralParameter not found");
       }
+
       return generalParameter;
    }
 
    async createGeneralParameter(data: CreateGeneralParameterInput) {
+      const userId = Buffer.from(uuid(), "base64");
       const generalParameter = await this.prisma.generalParameter.create({
          data: {
             name: data.name,
             code: data.code,
             shortName: data.shortName,
+            idGeneralParameterValue: data?.idGeneralParameterValue,
             // TODO: Fix
-            idOu: new Buffer(uuid(), "base64"),
-            idUserCreate: new Buffer(uuid(), "base64"),
-            idUserUpdate: new Buffer(uuid(), "base64"),
-            idStatus: uuid(),
+            idOu: Buffer.from(uuid(), "base64"),
+            idUserCreate: userId,
+            idUserUpdate: userId,
+            idStatus: "ACTIVE",
          },
       });
 
@@ -88,11 +75,11 @@ export class GeneralParameterService {
             code: item.code,
             shortName: item.shortName,
             idGeneralParameter: generalParameter.idGeneralParameter,
-            idGeneralParameterType: new Buffer(uuid(), "base64"),
+            idGeneralParameterType: Buffer.from(uuid(), "base64"),
             idOu: generalParameter.idOu,
-            idUserCreate: new Buffer(uuid(), "base64"),
-            idUserUpdate: new Buffer(uuid(), "base64"),
-            idStatus: uuid(),
+            idUserCreate: generalParameter.idUserCreate,
+            idUserUpdate: generalParameter.idUserUpdate,
+            idStatus: "ACTIVE",
          })),
       });
 
@@ -110,6 +97,7 @@ export class GeneralParameterService {
             name: data.name,
             shortName: data.shortName,
             code: data.code,
+            idGeneralParameterValue: data?.idGeneralParameterValue,
             generalParameterValue: {
                updateMany: data.generalParameterValue
                   .filter((item) => !!item.idGeneralParameterValue)
@@ -143,10 +131,10 @@ export class GeneralParameterService {
                            name: item.name,
                            shortName: item.shortName,
                            code: item.code,
-                           idGeneralParameterType: new Buffer(uuid(), "base64"),
-                           idUserCreate: new Buffer(uuid(), "base64"),
-                           idUserUpdate: new Buffer(uuid(), "base64"),
-                           idStatus: uuid(),
+                           idGeneralParameterType: Buffer.from(uuid(), "base64"),
+                           idUserCreate: Buffer.from(uuid(), "base64"),
+                           idUserUpdate: Buffer.from(uuid(), "base64"),
+                           idStatus: "ACTIVE",
                            idOu: data.idOu,
                         };
                      }),

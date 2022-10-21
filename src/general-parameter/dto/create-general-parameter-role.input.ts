@@ -1,6 +1,6 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { CustomUuidScalar } from "../scalars/buffer-scalar";
-import { GeneralParameterValueInput } from "./create-general-parameter-value.input";
+import { CustomUuidScalar } from "../../shared/scalars/buffer-scalar";
+import { GeneralParameterValueInput } from "../../general-parameter-value/dto/create-general-parameter-value.input";
 
 @InputType()
 export class GeneralParameterRoleInput {
