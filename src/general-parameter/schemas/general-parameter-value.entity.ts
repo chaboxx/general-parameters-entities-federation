@@ -1,6 +1,7 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Directive, Field, ObjectType } from "@nestjs/graphql";
 import { CustomUuidScalar } from "../scalars/buffer-scalar";
 @ObjectType()
+@Directive('@key(fields: "idGeneralParameterValue")')
 export class GeneralParameterValue {
    @Field(() => CustomUuidScalar)
    idGeneralParameterValue?: Buffer;

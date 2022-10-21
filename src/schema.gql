@@ -61,6 +61,7 @@ type GeneralParameter {
 
 type Entity {
   idEntity: BUFFER!
+  market: GeneralParameterValue!
 }
 
 type Query {
@@ -68,6 +69,7 @@ type Query {
   getGeneralParametersByCode(code: String!): [GeneralParameter!]!
   getGeneralParameterValueByArgs(name: String!, code: String!, shortName: String!): [GeneralParameter!]!
   getGeneralParameterById(id: BUFFER!): GeneralParameter!
+  getHello: String!
 }
 
 type Mutation {
