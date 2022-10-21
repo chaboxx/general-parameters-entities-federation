@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Int } from "@nestjs/graphql";
+import { Resolver, Query, Args, Int, ResolveReference } from "@nestjs/graphql";
 import { GeneralParameterValue } from "./schemas/general-parameter-value.entity";
 import { GeneralParameterValueService } from "./general-parameter-value.service";
 import { CustomUuidScalar } from "src/shared/scalars/buffer-scalar";
@@ -35,4 +35,11 @@ export class GeneralParameterValueResolver {
    ) {
       return this.generalParameterValue.getGeneralParameterValueById(idGeneralParameterValue);
    }
+
+   @ResolveReference()
+    getGeneralParameterValue(ref: { __typename: string, idGeneralParameterValue: string }) {
+      return this.generalParameterValue.getGeneralParameterValueById(
+         Buffer.from(ref.idGeneralParameterValue, "hex")
+      );
+    }
 }
