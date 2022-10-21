@@ -8,6 +8,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { GeneralParameterModule } from "./general-parameter/general-parameter.module";
 import { CustomUuidScalar } from "./shared/scalars/buffer-scalar";
 import { GeneralParameterValueModule } from "./general-parameter-value/general-parameter-value.module";
+import { Entity } from "./general-parameter-value/schemas/external/entity.schema";
 
 @Module({
    imports: [
@@ -17,6 +18,9 @@ import { GeneralParameterValueModule } from "./general-parameter-value/general-p
          plugins: [ApolloServerPluginLandingPageLocalDefault()],
          autoSchemaFile: join(process.cwd(), "src/schema.gql"),
          resolvers: { BUFFER: CustomUuidScalar },
+         buildSchemaOptions: {
+            orphanedTypes: [Entity],
+         }
       }),
       GeneralParameterModule,
       GeneralParameterValueModule,

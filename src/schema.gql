@@ -61,6 +61,10 @@ type GeneralParameter {
   generalParameterValue: [GeneralParameterValue!]!
 }
 
+type Entity {
+  idEntity: BUFFER!
+}
+
 type Query {
   generalParameters: [GeneralParameter!]!
   getGeneralParametersByCode(code: String!): [GeneralParameter!]!
