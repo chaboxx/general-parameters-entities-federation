@@ -54,7 +54,7 @@ export class GeneralParameterService {
    }
 
    async createGeneralParameter(data: CreateGeneralParameterInput) {
-      const userId = Buffer.from(uuid(), "base64");
+      const userId = Buffer.from(uuid(), "hex");
       const generalParameter = await this.prisma.generalParameter.create({
          data: {
             name: data.name,
@@ -62,7 +62,7 @@ export class GeneralParameterService {
             shortName: data.shortName,
             idGeneralParameterValue: data?.idGeneralParameterValue,
             // TODO: Fix
-            idOu: Buffer.from(uuid(), "base64"),
+            idOu: Buffer.from(uuid(), "hex"),
             idUserCreate: userId,
             idUserUpdate: userId,
             idStatus: "ACTIVE",
@@ -75,7 +75,7 @@ export class GeneralParameterService {
             code: item.code,
             shortName: item.shortName,
             idGeneralParameter: generalParameter.idGeneralParameter,
-            idGeneralParameterType: Buffer.from(uuid(), "base64"),
+            idGeneralParameterType: Buffer.from(uuid(), "hex"),
             idOu: generalParameter.idOu,
             idUserCreate: generalParameter.idUserCreate,
             idUserUpdate: generalParameter.idUserUpdate,
@@ -131,9 +131,9 @@ export class GeneralParameterService {
                            name: item.name,
                            shortName: item.shortName,
                            code: item.code,
-                           idGeneralParameterType: Buffer.from(uuid(), "base64"),
-                           idUserCreate: Buffer.from(uuid(), "base64"),
-                           idUserUpdate: Buffer.from(uuid(), "base64"),
+                           idGeneralParameterType: Buffer.from(uuid(), "hex"),
+                           idUserCreate: Buffer.from(uuid(), "hex"),
+                           idUserUpdate: Buffer.from(uuid(), "hex"),
                            idStatus: "ACTIVE",
                            idOu: data.idOu,
                         };
